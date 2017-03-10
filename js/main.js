@@ -32,15 +32,26 @@ var checkForMatch = function() {
 		}
 }
 
-var flipCard = function(cardId) {
+var flipCard = function() {
+	var cardId = this.getAttribute('data-id');
 	console.log("User flipped " + cards[cardId].rank);
 	console.log(cards[cardId].cardImage);
 	console.log(cards[cardId].suit);
 	cardsInPlay.push(cards[cardId].rank);
+	this.setAttribute('src',cards[cardId].cardImage);
 	if (cardsInPlay.length === 2) {	
 	checkForMatch();
 	}
 };
 
-flipCard(0); //cards[#]
-flipCard(2);
+var createBoard = function() {
+	for (var i = 0; i < cards.length; i++) { //is cards the right array?
+		var cardElement = document.createElement('img');
+		cardElement.setAttribute('src', 'images/back.png');
+		cardElement.setAttribute('data-id', i) //is this.i right here instead?
+		cardElement.addEventListener('click', flipCard);
+		document.getElementById('game-board').appendChild(cardElement); // may need to add  [0] after ..Id
+	}
+}
+
+createBoard();
